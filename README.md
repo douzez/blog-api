@@ -1,10 +1,10 @@
 # My Blog
 
-##
+## Main
 
-### Setup
+### API Setup
 
-```sh
+```s
 $ mkdir /blog/api
 $ python --version
 $ python -m venv venv-blog
@@ -29,4 +29,22 @@ $ less requirements.txt
   typing-extensions==3.10.0.2
 ```
 
-## Git setup
+### Git setup
+
+```s
+$ git init
+Initialized empty Git repository in /Users/douzez/Development/blog/api/blog_api/.git/
+$ vi .gitignore
+  esc --> i --> start typing
+  esc  --> :wq!
+$ git status
+$ git add .
+$ git commit -m "configure blog api project"
+$ git branch -M main
+$ git branch
+$ git remote add origin https://github.com/douzez/blog-api.git
+$ git remote remove origin
+$ git remote add origin git@github.com:douzez/blog-api.git
+$ git push -u origin main
+$ git checkout -b users
+```
