@@ -1,3 +1,4 @@
+from django.template.defaultfilters import slugify  # new
 from django.db import models
 from django.conf import settings
 # Extends the User model
@@ -50,3 +51,35 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Post(models.Model):
+    """ Post object, this is the main object """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             null=True,
+                             on_delete=models.SET_NULL)
+    tags = models.ManyToManyField('Tag')
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, null=False)
+    body = models.TextField()
+    description = models.CharField(max_length=255)
+    publish = models.BooleanField(default=False)
+    # image = models.ImageField(upload_to='uploads/post',
+    #                           blank=True,
+    #                           null=True)
+    # thumbnail = models.ImageField(upload_to='uploads/post',
+    #                               blank=True,
+    #                               null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return f'/{self.slug}'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)

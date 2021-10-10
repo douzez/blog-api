@@ -2,6 +2,45 @@
 
 ## Main
 
+### API models architecture
+
+- URLs
+
+  - /api/users
+  - /api/users/:id
+  - /api/blog
+  - /api/blog/posts
+  - /api/blog/posts/:id
+  - /api/blog/tags
+
+- Models
+
+- Users - get_user_model
+
+  - email, password, password2?
+  - token
+
+- Posts
+
+  - id
+  - title
+  - slug
+  - body
+  - description
+  - publish
+  - image
+  - thumbnail
+  - created_at
+  - updated_at
+  - tags - ManyToMany to Tags
+
+- Tags
+
+  - id
+  - name
+  - slug
+  - ManyToMany to Posts
+
 ### API Setup
 
 ```s
