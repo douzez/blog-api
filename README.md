@@ -6,8 +6,13 @@
 
 - URLs
 
+  Needs Authentication
+
   - /api/users
   - /api/users/:id
+
+  No Needs Authentication
+
   - /api/blog
   - /api/blog/posts
   - /api/blog/posts/:id
@@ -87,3 +92,8 @@ $ git remote add origin git@github.com:douzez/blog-api.git
 $ git push -u origin main
 $ git checkout -b users
 ```
+
+### REST Setup
+
+$ pip install django-rest-framework==0.1.0
+$ pip install django-cors-headers==3.7.0

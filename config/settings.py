@@ -37,8 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
     'core',
     'users',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080"
 ]
 
 MIDDLEWARE = [
