@@ -58,11 +58,8 @@ $ pip install django==3.1.7
 $ django-admin startproject blog_api
 $ cd blog_api/
 $ mv blog_api/ config
-$ mkdir apps/users
-$ mkdir apps/core
-$ python manage.py startapp users apps/users/
-$ python manage.py startapp users apps/users
-$ python manage.py startapp core apps/core
+$ python manage.py startapp users
+$ python manage.py startapp core
 $ pip freeze
 $ pip freeze > requirements.txt
 $ less requirements.txt
@@ -71,6 +68,7 @@ $ less requirements.txt
   pytz==2021.1
   sqlparse==0.4.2
   typing-extensions==3.10.0.2
+$ python manage.py startapp blog
 ```
 
 ### Git setup
