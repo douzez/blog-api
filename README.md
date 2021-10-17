@@ -10,13 +10,16 @@
 
   - /api/users
   - /api/users/:id
+  - /api/blog/tags (post)
+  - /api/blog/tags/:tag_slug (patch - change name)
 
   No Needs Authentication
 
   - /api/blog
   - /api/blog/posts
   - /api/blog/posts/:id
-  - /api/blog/tags
+  - /api/blog/tags (get)
+  - /api/blog/tags/:tag_slug/posts (get)
 
 - Models
 

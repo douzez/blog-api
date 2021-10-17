@@ -40,7 +40,7 @@ class ModelTestTag(TestCase):
         # django.db.utils.IntegrityError: UNIQUE constraint failed: core_user.email
         with self.assertRaises(IntegrityError):
             models.Tag.objects.create(
-                name='exists',
+                name=self.existing_tag.name,
                 user=get_user_model().objects.create_user(
                     email='qaa@gma.com',
                     password='testasoni12'
