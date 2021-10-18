@@ -6,20 +6,20 @@
 
 - URLs
 
-  Needs Authentication
+  Authentication
 
   - /api/users
   - /api/users/:id
   - /api/blog/tags (post)
   - /api/blog/tags/:tag_slug (patch - change name)
 
-  No Needs Authentication
+  No Authentication
 
-  - /api/blog
-  - /api/blog/posts
-  - /api/blog/posts/:id
-  - /api/blog/tags (get)
-  - /api/blog/tags/:tag_slug/posts (get)
+  - /api/blog/posts ==> DONE
+  - /api/blog/posts?page=3 ==> DONE with pagination
+  - /api/blog/posts/:slug ==> In PROGRESS
+  - /api/blog/tags (get) ==> DONE
+  - /api/blog/tags/:tag_slug (get) ==> DONE with posts(slug)
 
 - Models
 

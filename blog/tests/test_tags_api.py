@@ -5,7 +5,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import Tag
+from core.models import Tag, Post
 from blog.serializers import TagSerializer
 
 # CREATE_TAG_URL = reverse('blog:create')
@@ -52,11 +52,41 @@ class PublicTagsApiTests(TestCase):
 
         url = detail_url(tag.slug)
         res = self.client.get(url)
-        print(res.data)
         serializer = TagSerializer(tag)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
+
+    def test_retrieve_one_tag_with_its_posts(self):
+        """ Test retrieving a tag with its posts """
+        tag = Tag.objects.create(user=self.user, name='postie tag')
+        post = Post.objects.create(
+            user=self.user,
+            title='Post with tags',
+            body='Quisque nec era, auctor elit.',
+            description='There is...'
+        )
+        post2 = Post.objects.create(
+            user=self.user,
+            title='Post with tags 2',
+            body='Quisque nec era, auctor elit.',
+            description='There is...'
+        )
+        Post.objects.create(
+            user=self.user,
+            title='Post without tags',
+            body='Quisque nec era, auctor elit.',
+            description='There is...'
+        )
+        tag.posts.add(post)
+        tag.posts.add(post2)
+        url = detail_url(tag.slug)
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data['posts']), 2)
+        self.assertIn('post-with-tags', res.data['posts'])
+        # res.data ==> {'name': 'postie tag', 'slug': 'postie-tag', 'get_absolute_url': '/postie-tag', 'posts': ['post-with-tags-2', 'post-with-tags']}
 
 
 class PrivateTagsApiTests(TestCase):

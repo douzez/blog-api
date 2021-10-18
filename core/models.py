@@ -76,7 +76,7 @@ class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              null=True,
                              on_delete=models.SET_NULL)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', related_name='posts')
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, null=False)
     body = models.TextField()
@@ -101,3 +101,6 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['-title']

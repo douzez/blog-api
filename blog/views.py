@@ -1,10 +1,18 @@
 from django.http import Http404
 
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from core.models import Tag
-from .serializers import TagSerializer
+from core.models import Tag, Post
+from .serializers import TagSerializer, PostSerializer
+from .paginators import PostPagination
+
+
+class AllPosts(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    pagination_class = PostPagination
 
 
 class AllTags(APIView):
