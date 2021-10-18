@@ -11,6 +11,11 @@ from blog.serializers import PostSerializer
 ALL_POSTS_URL = reverse('blog:all_posts')
 
 
+def detail_url(post_slug):
+    """ Return post detail url /api/blog/posts/:post_slug"""
+    return reverse('blog:post-detail', args=[post_slug])
+
+
 def create_sample_tags(number_tags=3):
     """ Creates N number of tags """
     for n in range(number_tags):
@@ -72,3 +77,14 @@ class PublicPostsApiTests(TestCase):
         # ('next', None),
         # ('previous', 'http://testserver/api/blog/posts?page=3'),
         # ('results', [OrderedDict([('title', 'Post0'), ('get_absolute_url', '/post0')...
+
+    def test_retrieve_one_post(self):
+        """ Test retrieving one single Post """
+        post = sample_post(self.user, title='One Post')
+
+        url = detail_url(post.slug)
+        res = self.client.get(url)
+        serializer = PostSerializer(post)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)

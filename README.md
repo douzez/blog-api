@@ -6,14 +6,14 @@
 
 - URLs
 
-  Authentication
+  Authentication (POST, PATCH, DELETE)
 
   - /api/users
   - /api/users/:id
   - /api/blog/tags (post)
   - /api/blog/tags/:tag_slug (patch - change name)
 
-  No Authentication
+  No Authentication (GET)
 
   - /api/blog/posts ==> DONE
   - /api/blog/posts?page=3 ==> DONE with pagination

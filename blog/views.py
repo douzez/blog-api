@@ -10,9 +10,27 @@ from .paginators import PostPagination
 
 
 class AllPosts(generics.ListAPIView):
+    """ Return a list of all posts """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = PostPagination
+
+
+class PostDetail(APIView):
+    """ Return a single Post """
+
+    def _get_object(self, post_slug):
+        """ Return a post based on its slug """
+        try:
+            return Post.objects.get(slug=post_slug)
+        except Post.DoesNotExist:
+            raise Http404
+
+    def get(self, request, post_slug, format=None):
+        """ Returns post """
+        post = self._get_object(post_slug)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
 
 
 class AllTags(APIView):
@@ -32,7 +50,7 @@ class TagDetail(APIView):
             raise Http404
 
     def get(self, request, tag_slug, format=None):
-        """ Returns tag for tag slug """
+        """ Returns Tag """
         tag = self._get_object(tag_slug)
         serializer = TagSerializer(tag)
         return Response(serializer.data)
