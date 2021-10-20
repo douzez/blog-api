@@ -9,15 +9,23 @@
   Authentication (POST, PATCH, DELETE)
 
   - /api/users
-  - /api/users/:id
-  - /api/blog/tags (post)
+  - mu - manage user
+  - /api/users/mu ==> DONE - GET user with TOKEN
+  - /api/users/mu ==> DONE - UPDATE PATCH user with TOKEN
+
+  - /api/blog/tags/create (post) -- In PROGRESS
   - /api/blog/tags/:tag_slug (patch - change name)
+
+  - /api/blog/posts/create
+  - /api/blog/posts/:post_slug (patch)
 
   No Authentication (GET)
 
+  - /api/users/create ==> DONE (POST)
+  - /api/users/token ==> DONE (GET) get token to be authenticated
   - /api/blog/posts ==> DONE
   - /api/blog/posts?page=3 ==> DONE with pagination
-  - /api/blog/posts/:slug ==> In PROGRESS
+  - /api/blog/posts/:slug ==> DONE
   - /api/blog/tags (get) ==> DONE
   - /api/blog/tags/:tag_slug (get) ==> DONE with posts(slug)
 

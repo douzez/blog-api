@@ -6,10 +6,10 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from core.models import Tag, Post
-from blog.serializers import TagSerializer
+from blog.serializers import TagDetailSerializer
 
 # CREATE_TAG_URL = reverse('blog:create')
-ALL_TAGS_URL = reverse('blog:all_tags')
+ALL_TAGS_URL = reverse('blog:all-tags')
 
 
 def detail_url(tag_slug):
@@ -37,7 +37,7 @@ class PublicTagsApiTests(TestCase):
         res = self.client.get(ALL_TAGS_URL)
 
         tags = Tag.objects.all().order_by('name')
-        serializer = TagSerializer(tags, many=True)
+        serializer = TagDetailSerializer(tags, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -52,7 +52,7 @@ class PublicTagsApiTests(TestCase):
 
         url = detail_url(tag.slug)
         res = self.client.get(url)
-        serializer = TagSerializer(tag)
+        serializer = TagDetailSerializer(tag)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -87,7 +87,3 @@ class PublicTagsApiTests(TestCase):
         self.assertEqual(len(res.data['posts']), 2)
         self.assertIn('post-with-tags', res.data['posts'])
         # res.data ==> {'name': 'postie tag', 'slug': 'postie-tag', 'get_absolute_url': '/postie-tag', 'posts': ['post-with-tags-2', 'post-with-tags']}
-
-
-class PrivateTagsApiTests(TestCase):
-    """ Tests create, update, delete endpoints for authenticated user """

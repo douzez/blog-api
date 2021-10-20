@@ -3,7 +3,7 @@ from rest_framework import serializers
 from core.models import Tag, Post
 
 
-class TagSerializer(serializers.ModelSerializer):
+class TagDetailSerializer(serializers.ModelSerializer):
     """ Serializer for Tag model """
     # posts = serializers.PrimaryKeyRelatedField(
     #     queryset=Post.objects.all(), many=True)
@@ -23,9 +23,21 @@ class TagSerializer(serializers.ModelSerializer):
         )
 
 
+class TagSerializer(serializers.ModelSerializer):
+    """ Serializer for Tag model """
+    class Meta:
+        model = Tag
+        fields = ('name',)
+
+    def validate_name(self, value):
+        if value:
+            return value
+        raise serializers.ValidationErrors('Name must be present.')
+
+
 class PostSerializer(serializers.ModelSerializer):
     """ Serializer for Post model """
-    tags = TagSerializer(many=True, read_only=True)
+    tags = TagDetailSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post

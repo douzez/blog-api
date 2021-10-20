@@ -49,8 +49,7 @@ class Tag(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             null=True,
-                             on_delete=models.SET_NULL)
+                             on_delete=models.CASCADE)
     slug = models.SlugField(unique=True, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
