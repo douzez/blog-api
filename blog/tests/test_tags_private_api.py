@@ -11,9 +11,14 @@ from core.models import Tag
 CREATE_TAG_URL = reverse('blog:create-tag')
 
 
-def detail_url(tag_slug):
+def detail_update_url(tag_slug):
     """ Return tag detail url /api/blog/tags/:tag_slug """
     return reverse('blog:update-tag', args=[tag_slug])
+
+
+def detail_delete_url(tag_slug):
+    """ Return tag detail url /api/blog/tags/:tag_slug """
+    return reverse('blog:delete-tag', args=[tag_slug])
 
 
 class PrivateTagsApiTests(TestCase):
@@ -45,9 +50,24 @@ class PrivateTagsApiTests(TestCase):
         tag = Tag.objects.create(name='avs', user=self.user)
         payload = {'name': 'aws'}
 
-        url = detail_url(tag.slug)
+        url = detail_update_url(tag.slug)
         res = self.client.patch(url, payload)
         tag.refresh_from_db()
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(tag.name, payload['name'])
+
+    def test_delete_tag_with_authenticated_user(self):
+        """ Test deleting a Tag with authenticated user """
+        tag = Tag.objects.create(name='scss', user=self.user)
+
+        url = detail_delete_url(tag.slug)
+        res = self.client.delete(url)
+        # tag.refresh_from_db()
+        exists = Tag.objects.filter(
+            user=self.user,
+            name='scss'
+        ).exists()
+
+        self.assertFalse(exists)
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)

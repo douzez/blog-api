@@ -10,6 +10,8 @@ urlpatterns = [
     path('tags/<slug:tag_slug>/', views.TagDetail.as_view(), name='tag-detail'),
     path('tags/update/<slug:tag_slug>/',
          views.TagView.as_view(), name='update-tag'),
+    path('tags/delete/<slug:tag_slug>/',
+         views.TagView.as_view(), name='delete-tag'),
     path('posts/', views.AllPosts.as_view(), name='all_posts'),
     path('posts/<slug:post_slug>/', views.PostDetail.as_view(), name='post-detail'),
 ]

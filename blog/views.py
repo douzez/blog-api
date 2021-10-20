@@ -63,7 +63,7 @@ class TagDetail(APIView):
 
 
 class TagView(APIView):
-    """ Create or update a tag instance with authenticated user """
+    """ Create or update or delete a tag instance with authenticated user """
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -82,4 +82,10 @@ class TagView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=statys.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, tag_slug):
+        """ Delete Tag with authenticated user """
+        tag = _get_tag_object(tag_slug=tag_slug)
+        tag.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
